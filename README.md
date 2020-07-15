@@ -38,7 +38,7 @@ To setup a Sercom4 SPI slave on an Adafruit Feather M0, connect the pins as foll
 | SS      | PB10         | PIN23       | Sercom4/PAD[2] |
 | MISO    | PB11         | PIN24       | Sercom4/PAD[3] |
 
-The pinout of the Adafruit Feather M0 is found [here](https://cdn-learn.adafruit.com/assets/assets/000/046/244/original/adafruit_products_Feather_M0_Basic_Proto_v2.2-1.png?1504885373)
+The pinout of the Adafruit Feather M0 is found [here](https://cdn-learn.adafruit.com/assets/assets/000/046/244/original/adafruit_products_Feather_M0_Basic_Proto_v2.2-1.png?1504885373).
 
 Please note that on the Adafruit Feather M0 the pin descriptions on the board do not match how the pins are used when using Sercom4.
 
