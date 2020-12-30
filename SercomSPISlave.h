@@ -9,6 +9,7 @@ class SercomSPISlave
     // Constructors //
     SercomSPISlave();
     // Public Methods //
+    void Sercom0init();
     void Sercom1init();
     void Sercom4init();
 };

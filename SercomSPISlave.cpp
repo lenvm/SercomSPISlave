@@ -7,6 +7,87 @@ SercomSPISlave::SercomSPISlave()
 }
 
 // Public Methods //
+void SercomSPISlave::Sercom0init()
+{
+    //Configure SERCOM0  SPI PINS  PAD
+    //Set PA08 as input  (MOSI)    00
+    //Set PA09 as input  (SCK)     01
+    //Set PA10 as input  (SS)      02
+    //Set PA11 as output (MISO)    03
+    PORT->Group[PORTA].PINCFG[8].bit.PMUXEN = 0x1; //Enable Peripheral Multiplexing for SERCOM0 SPI PA08
+    PORT->Group[PORTA].PMUX[4].bit.PMUXE = 0x2; //SERCOM 0 is selected for peripheral use of this pad (0x2 selects peripheral function C: SERCOM)
+    PORT->Group[PORTA].PINCFG[9].bit.PMUXEN = 0x1; //Enable Peripheral Multiplexing for SERCOM0 SPI PA09
+    PORT->Group[PORTA].PMUX[4].bit.PMUXO = 0x2; //SERCOM 0 is selected for peripheral use of this pad (0x2 selects peripheral function C: SERCOM)
+    PORT->Group[PORTA].PINCFG[10].bit.PMUXEN = 0x1; //Enable Peripheral Multiplexing for SERCOM0 SPI PA10
+    PORT->Group[PORTA].PMUX[5].bit.PMUXE = 0x2; //SERCOM 0 is selected for peripheral use of this pad (0x2 selects peripheral function C: SERCOM)
+    PORT->Group[PORTA].PINCFG[11].bit.PMUXEN = 0x1; //Enable Peripheral Multiplexing for SERCOM0 SPI PA11
+    PORT->Group[PORTA].PMUX[5].bit.PMUXO = 0x2; //SERCOM 0 is selected for peripheral use of this pad (0x2 selects peripheral function C: SERCOM)
+    /*
+    Explanation:
+    PMUXEN stands for Peripheral Multiplexing Enable
+    PMUXE stands for Even bits in the Peripheral Multiplexing register
+    PMUXO stands for Even bits in the Peripheral Multiplexing register
+    The selection of peripheral function A to H is done by writing to the Peripheral Multiplexing Odd and Even bits in the Peripheral Multiplexing register (PMUXn.PMUXE/O) in the PORT.
+    Reference: Atmel-42181G-SAM-D21_Datasheet section 6.1 on page 21
+
+    PA08 corresponds to: PORTA, PMUX[4] Even
+    PA09 corresponds to: PORTA, PMUX[4] Odd
+    PA10 corresponds to: PORTA, PMUX[5] Even
+    PA11 corresponds to: PORTA, PMUX[5] Odd
+    In general:
+    Px(2n+0/1) corresponds to Portx, PMUX[n] Even=0/Odd=1
+    */
+    
+  //Disable SPI 1
+  SERCOM0->SPI.CTRLA.bit.ENABLE =0;
+  while(SERCOM0->SPI.SYNCBUSY.bit.ENABLE);
+  
+  //Reset SPI 1
+  SERCOM0->SPI.CTRLA.bit.SWRST = 1;
+  while(SERCOM0->SPI.CTRLA.bit.SWRST || SERCOM0->SPI.SYNCBUSY.bit.SWRST);
+  
+  //Setting up NVIC
+  NVIC_EnableIRQ(SERCOM0_IRQn);
+  NVIC_SetPriority(SERCOM0_IRQn,2);
+  
+  //Setting Generic Clock Controller!!!!
+  GCLK->CLKCTRL.reg = GCLK_CLKCTRL_ID(GCM_SERCOM0_CORE) | //Generic Clock 0
+            GCLK_CLKCTRL_GEN_GCLK0 | // Generic Clock Generator 0 is the source
+            GCLK_CLKCTRL_CLKEN; // Enable Generic Clock Generator
+  
+  while(GCLK->STATUS.reg & GCLK_STATUS_SYNCBUSY); //Wait for synchronisation
+  
+  //Set up SPI Control A Register
+  SERCOM0->SPI.CTRLA.bit.DORD = 0; //MSB first
+  SERCOM0->SPI.CTRLA.bit.CPOL = 0; //SCK is low when idle, leading edge is rising edge
+  SERCOM0->SPI.CTRLA.bit.CPHA = 0; //data sampled on leading sck edge and changed on a trailing sck edge
+  SERCOM0->SPI.CTRLA.bit.FORM = 0x0; //Frame format = SPI
+  SERCOM0->SPI.CTRLA.bit.DIPO = 0x0; //DATA PAD 00 MOSI is used as slave input (slave mode) // page 492
+  SERCOM0->SPI.CTRLA.bit.DOPO = 0x2; //DATA PAD 03 MISO is used as slave output
+  
+  SERCOM0->SPI.CTRLA.bit.MODE = 0x2; //SPI in Slave mode
+  SERCOM0->SPI.CTRLA.bit.IBON = 0x1; //Buffer Overflow notification
+  SERCOM0->SPI.CTRLA.bit.RUNSTDBY = 1; //wake on receiver complete
+  
+  //Set up SPI control B register
+  SERCOM0->SPI.CTRLB.bit.SSDE = 0x1; //Slave Selecte Detection Enabled
+  SERCOM0->SPI.CTRLB.bit.CHSIZE = 0; //character size 8 Bit
+  
+  //Set up SPI interrupts
+  SERCOM0->SPI.INTENSET.bit.SSL = 0x1; //Enable Slave Select low interrupt        
+  SERCOM0->SPI.INTENSET.bit.RXC = 0x1; //Receive complete interrupt
+  SERCOM0->SPI.INTENSET.bit.TXC = 0x1; //Receive complete interrupt
+  SERCOM0->SPI.INTENSET.bit.ERROR = 0x1; //Receive complete interrupt
+  SERCOM0->SPI.INTENSET.bit.DRE = 0x1; //Data Register Empty interrupt
+
+  //Enable SPI
+  SERCOM0->SPI.CTRLA.bit.ENABLE = 1;
+  while(SERCOM0->SPI.SYNCBUSY.bit.ENABLE);
+  SERCOM0->SPI.CTRLB.bit.RXEN = 0x1; //Enable Receiver, this is done here due to errate issue
+  while(SERCOM0->SPI.SYNCBUSY.bit.CTRLB); //wait until receiver is enabled
+
+}
+
 void SercomSPISlave::Sercom1init()
 {
     //Configure SERCOM1 SPI PINS
