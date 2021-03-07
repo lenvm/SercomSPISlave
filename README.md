@@ -1,11 +1,12 @@
 # SercomSPISlave
 
 ## Introduction
-This is a Sercom SPI library used for ATSAMD21 boards, such as the Arduino Zero and Adafruit Feather M0. It provides functions to setup SPI Slaves using Sercom1 and Sercom4.
+This is a Sercom SPI library used for ATSAMD21 boards, such as the Arduino Zero, Arduino MKR ZERO and Adafruit Feather M0. It provides functions to setup SPI Slaves using Sercom0, Sercom1 and Sercom4.
 
 To use it with the Arduino IDE, simply copy the the folder into the Arduino library folder.
 
-Two examples are provided to set up a:
+Examples are provided to set up a:
+- Sercom0 SPI Slave
 - Sercom1 SPI Slave
 - Sercom4 SPI Slave
 
@@ -13,7 +14,16 @@ Two examples are provided to set up a:
 Setting up a board as a SPI slave can be used to for instance communicate over SPI between a Raspberry Pi (SPI master) and an ATSAMD21 based board (SPI slave).
 
 ## Hardware implementation
-The pins used when the board is set up as an SPI Slave using Sercom1 are:
+The pins used when the board is set up as an SPI Slave using the different Sercom are:
+### Sercom0
+| SPI pin | description         | ATSAMD21 pin |
+|---------|---------------------|--------------|
+| MOSI    | Master Out Slave In | PA08         |
+| SCK     | Serial Clock        | PA09         |
+| SS      | Slave Select        | PA10         |
+| MISO    | Master In Slave Out | PA11         |
+
+### Sercom1
 | SPI pin | description         | ATSAMD21 pin |
 |---------|---------------------|--------------|
 | MOSI    | Master Out Slave In | PA16         |
@@ -21,7 +31,7 @@ The pins used when the board is set up as an SPI Slave using Sercom1 are:
 | SS      | Slave Select        | PA18         |
 | MISO    | Master In Slave Out | PA19         |
 
-The pins used when the board is set up as an SPI Slave using Sercom4 are:
+### Sercom4
 | SPI pin | description         | ATSAMD21 pin |
 |---------|---------------------|--------------|
 | MOSI    | Master Out Slave In | PA12         |
