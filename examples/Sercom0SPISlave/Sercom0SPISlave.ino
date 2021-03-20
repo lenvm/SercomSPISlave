@@ -36,7 +36,10 @@ void setup()
 {  
   Serial.begin(115200);
   Serial.println("Serial started");
-  SPISlave.Sercom0init();
+  /*
+   * Initialize SERCOM by passing Sercom number and SPI settings (CPOL and CPHA) these last two are optional. If they aren't specified both will be set to Low values
+   */
+  SPISlave.Sercominit(SERCOM0, SPI_CPOL_HIGH, SPI_CPHA_HIGH); 
   Serial.println("SERCOM0 SPI slave initialized");
 }
 
