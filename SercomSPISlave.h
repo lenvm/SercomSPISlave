@@ -24,15 +24,19 @@
 
 #include <Arduino.h>
 
+#define   SPI_CPOL_HIGH   (1)
+#define   SPI_CPOL_LOW    (0)
+
+#define   SPI_CPHA_HIGH   (1)
+#define   SPI_CPHA_LOW    (0)
+
 class SercomSPISlave
 {
     public:
     // Constructors //
     SercomSPISlave();
     // Public Methods //
-    void Sercom0init();
-    void Sercom1init();
-    void Sercom4init();
+    void Sercominit(Sercom* sercom_x, int cpol=0, int cpha=0);
 };
 
 #endif
