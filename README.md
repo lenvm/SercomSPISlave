@@ -1,4 +1,4 @@
-# Sercom SPI Slave
+# SercomSPISlave
 
 ## Introduction
 This is a Sercom SPI library used for ATSAMD21 boards, such as the Arduino Zero, Arduino MKR ZERO and Adafruit Feather M0. It provides functions to setup SPI Slaves using Sercom0, Sercom1 and Sercom4.
