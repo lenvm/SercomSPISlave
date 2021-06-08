@@ -47,7 +47,7 @@ void SercomSPISlave::Sercom0init()
     Explanation:
     PMUXEN stands for Peripheral Multiplexing Enable
     PMUXE stands for Even bits in the Peripheral Multiplexing register
-    PMUXO stands for Even bits in the Peripheral Multiplexing register
+    PMUXO stands for Odd bits in the Peripheral Multiplexing register
     The selection of peripheral function A to H is done by writing to the Peripheral Multiplexing Odd and Even bits in the Peripheral Multiplexing register (PMUXn.PMUXE/O) in the PORT.
     Reference: Atmel-42181G-SAM-D21_Datasheet section 6.1 on page 21
 
@@ -128,7 +128,7 @@ void SercomSPISlave::Sercom1init()
 Explanation:
 PMUXEN stands for Peripheral Multiplexing Enable
 PMUXE stands for Even bits in the Peripheral Multiplexing register
-PMUXO stands for Even bits in the Peripheral Multiplexing register
+PMUXO stands for Odd bits in the Peripheral Multiplexing register
 The selection of peripheral function A to H is done by writing to the Peripheral Multiplexing Odd and Even bits in the Peripheral Multiplexing register (PMUXn.PMUXE/O) in the PORT.
 Reference: Atmel-42181G-SAM-D21_Datasheet section 6.1 on page 21
 
@@ -212,7 +212,7 @@ void SercomSPISlave::Sercom4init()
 Explanation:
 PMUXEN stands for Peripheral Multiplexing Enable
 PMUXE stands for Even bits in the Peripheral Multiplexing register
-PMUXO stands for Even bits in the Peripheral Multiplexing register
+PMUXO stands for Odd bits in the Peripheral Multiplexing register
 The selection of peripheral function A to H is done by writing to the Peripheral Multiplexing Odd and Even bits in the Peripheral Multiplexing register (PMUXn.PMUXE/O) in the PORT.
 Reference: Atmel-42181G-SAM-D21_Datasheet section 6.1 on page 21
 
