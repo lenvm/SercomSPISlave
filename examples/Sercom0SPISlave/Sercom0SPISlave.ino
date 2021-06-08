@@ -23,8 +23,9 @@
   Example code for the SercomSPISlave library
   This code initializes a SERCOM0 SPI Slave and prints the data received.
 
-  Example written by stubb
-  2020
+  2020 July 15 written by lenvm
+  2020 December modified by stubb
+  2021 June 8 modified by lenvm
 */
 
 #include <SercomSPISlave.h>
@@ -57,6 +58,7 @@ void SERCOM0_Handler() // 25.7 Register Summary, page 454 atmel 42181, samd21
   #ifdef DEBUG
     Serial.print("Interrupt: "); Serial.println(interrupts);
   #endif
+  
   if (interrupts & (1 << 3)) // 8 = 1000 = SSL
   {
     #ifdef DEBUG
@@ -64,6 +66,7 @@ void SERCOM0_Handler() // 25.7 Register Summary, page 454 atmel 42181, samd21
     #endif
     SERCOM0->SPI.INTFLAG.bit.SSL = 1; //clear slave select interrupt
   }
+  
   if (interrupts & (1 << 2)) // 4 = 0100 = RXC
   {
     #ifdef DEBUG
@@ -72,6 +75,7 @@ void SERCOM0_Handler() // 25.7 Register Summary, page 454 atmel 42181, samd21
     data = SERCOM0->SPI.DATA.reg; //Read data register
     SERCOM0->SPI.INTFLAG.bit.RXC = 1; //clear receive complete interrupt
   }
+  
   if (interrupts & (1 << 1)) // 2 = 0010 = TXC
   {
     #ifdef DEBUG
@@ -87,6 +91,7 @@ void SERCOM0_Handler() // 25.7 Register Summary, page 454 atmel 42181, samd21
     #endif
     SERCOM0->SPI.DATA.reg = 0xAA;
   }
+  
   char _data = data;
   Serial.println(_data); // print received data
 }
