@@ -23,8 +23,10 @@
   Example code for the SercomSPISlave library.
   This code initializes a Sercom4 SPI Slave and prints the data received.
 
-  2020 July 15 written by lenvm
-  2021 June 8 updated by lenvm
+  Written 2020 July 15
+  by lenvm
+  Updated 2021 June 8
+  by lenvm
 */
 
 #include <SercomSPISlave.h>
