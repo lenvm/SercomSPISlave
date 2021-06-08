@@ -133,9 +133,9 @@ The selection of peripheral function A to H is done by writing to the Peripheral
 Reference: Atmel-42181G-SAM-D21_Datasheet section 6.1 on page 21
 
 PA16 corresponds to: PORTA, PMUX[8] Even
-PA17 corresponds to: PORTB, PMUX[8] Odd
-PA18 corresponds to: PORTB, PMUX[9] Even
-PA19 corresponds to: PORTB, PMUX[9] Odd
+PA17 corresponds to: PORTA, PMUX[8] Odd
+PA18 corresponds to: PORTA, PMUX[9] Even
+PA19 corresponds to: PORTA, PMUX[9] Odd
 In general:
 Px(2n+0/1) corresponds to Portx, PMUX[n] Even=0/Odd=1
 */
