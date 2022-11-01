@@ -27,11 +27,33 @@
 class SercomSPISlave
 {
     public:
+    
     // Constructors //
     SercomSPISlave();
+    
     // Public Methods //
+    /**
+     * @brief SPI slave initialization using SERCOM0
+     * 
+     * This function initializes an SPI slave using SERCOM0. It defines the pins used and sets the SERCOM registries. 
+     * 
+     */
     void Sercom0init();
+    
+    /**
+     * @brief SPI slave initialization using SERCOM1
+     * 
+     * This function initializes an SPI slave using SERCOM1. It defines the pins used and sets the SERCOM registries. 
+     * 
+     */
     void Sercom1init();
+    
+    /**
+     * @brief SPI slave initialization using SERCOM4
+     * 
+     * This function initializes an SPI slave using SERCOM4. It defines the pins used and sets the SERCOM registries. 
+     * 
+     */
     void Sercom4init();
 };
 
