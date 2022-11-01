@@ -24,37 +24,50 @@
 
 #include <Arduino.h>
 
-class SercomSPISlave
-{
-    public:
-    
-    // Constructors //
-    SercomSPISlave();
-    
-    // Public Methods //
-    /**
-     * @brief SPI slave initialization using SERCOM0
-     * 
-     * This function initializes an SPI slave using SERCOM0. It defines the pins used and sets the SERCOM registries. 
-     * 
-     */
-    void Sercom0init();
-    
-    /**
-     * @brief SPI slave initialization using SERCOM1
-     * 
-     * This function initializes an SPI slave using SERCOM1. It defines the pins used and sets the SERCOM registries. 
-     * 
-     */
-    void Sercom1init();
-    
-    /**
-     * @brief SPI slave initialization using SERCOM4
-     * 
-     * This function initializes an SPI slave using SERCOM4. It defines the pins used and sets the SERCOM registries. 
-     * 
-     */
-    void Sercom4init();
+class SercomSPISlave {
+ public:
+  
+  // Constructors //
+  SercomSPISlave();
+  
+  // Public Methods //
+  /**
+   * @brief SPI slave initialization using SERCOM0
+   * 
+   * This function initializes an SPI slave using SERCOM0. It defines the pins used and sets the SERCOM registries. 
+   * 
+   */
+  void Sercom0init();
+  
+  /**
+   * @brief SPI slave initialization using SERCOM1
+   * 
+   * This function initializes an SPI slave using SERCOM1. It defines the pins used and sets the SERCOM registries. 
+   * 
+   */
+  void Sercom1init();
+  
+  /**
+   * @brief SPI slave initialization using SERCOM4
+   * 
+   * This function initializes an SPI slave using SERCOM4. It defines the pins used and sets the SERCOM registries. 
+   * 
+   */
+  void Sercom4init();
+  
+ private:
+  // Private Methods
+  /**
+   * @brief SERCOM registry initialization
+   * 
+   * This function initializes the SERCOM registries of an SPI slave.
+   * 
+   * @param[in] sercom_x The following are supported: SERCOM0, SERCOM1 or SERCOM4
+   * 
+   * @return void
+   * 
+   */
+  void SercomRegistryInit(Sercom* sercom_x);
 };
 
 #endif
