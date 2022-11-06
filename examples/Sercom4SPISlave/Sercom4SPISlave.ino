@@ -32,7 +32,7 @@
 */
 
 #include <SercomSPISlave.h>
-SercomSPISlave SPISlave;
+Sercom4SPISlave SPISlave; // to use a different SERCOM, change this line and find and replace all SERCOM4 with the SERCOM of your choice
 
 #define DEBUG // uncomment this line to print debug data to the serial bus
 #define INTERRUPT2BUFFER // uncomment this line to copy the data received in the Data Received Complete interrupt to a buffer to be used in the main loop
@@ -45,7 +45,7 @@ void setup()
 {  
   Serial.begin(115200);
   Serial.println("Serial started");
-  SPISlave.Sercom4init();
+  SPISlave.SercomInit(SPISlave.MOSI_Pins::PA12, SPISlave.SCK_Pins::PB09, SPISlave.SS_Pins::PB10, SPISlave.MISO_Pins::PB11);
   Serial.println("SERCOM4 SPI slave initialized");
 }
 
