@@ -6,11 +6,15 @@ name: CI Arduino Lint
 
 # Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
+  # Triggers the workflow on push or pull request events but only for the master and release/* branches
   push:
-    branches: [ master ]
+    branches:
+      - master
+      - release/*
   pull_request:
-    branches: [ master ]
+    branches:
+      - master
+      - release/*
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -21,6 +25,6 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       # Checks-out Arduino Lint Action repository under, so your job can access it
       - uses: arduino/arduino-lint-action@v1
