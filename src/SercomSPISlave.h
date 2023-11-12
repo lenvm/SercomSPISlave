@@ -207,12 +207,34 @@ class SercomSPISlave {
    * 
    * This function initializes the SERCOM registries of an SPI slave.
    * 
-   * @param[in] sercom_x The following are supported: SERCOM0, SERCOM1, SERCOM2, SERCOM3, SERCOM4, SERCOM5
+   * @param[in] sercom_x The following are supported:
+   * | SERCOM0
+   * | SERCOM1
+   * | SERCOM2
+   * | SERCOM3
+   * | SERCOM4
+   * | SERCOM5
+   * @param[in] dipo Optional: Data in pinout. The default is 0x0. These bits define the data in (DI) pad configurations. In master operation, DI is MISO. In slave operation, DI is MOSI.
+   * | 0x0: SERCOM PAD[0] is DI. Default. dopo can be 0x1 or 0x2.
+   * | 0x1: SERCOM PAD[1] is DI. This changes the SCK_Pin to be used as MOSI. No dopo is compatible as each dopo uses PAD[1].
+   * | 0x2: SERCOM PAD[2] is DI. This changes the SS_Pin to be used as MOSI. dopo can be 0x3
+   * | 0x3: SERCOM PAD[3] is DI. This changes the MISO_Pin to be used as MOSI. dopo can be 0x0
+   * @param[in] dopo Optional: Data in pinout. The default is 0x2. These bits define the available pad configurations for data out (DO) and serial clock (SCK). In slave operation, the slave select line (SS) is controlled by data_out. In master operation, DO is MOSI. In slave operation, DO is MISO.
+   * | 0x0: PAD[0] is DO, PAD[1] is SCK, PAD[2] is SS. This changes the MOSI_Pin to be used as MISO.
+   * | 0x1: PAD[2] is DO, PAD[3] is SCK, PAD[1] is SS. This changes the SS_Pin to be used as MISO, the MISO_Pin to be used as SCK, the SCK_Pin to be used as SS.
+   * | 0x2: PAD[3] is DO, PAD[1] is SCK, PAD[2] is SS. Default.
+   * | 0x3: PAD[0] is DO, PAD[3] is SCK, PAD[1] is SS. This changes the MOSI_Pin to be used as MISO, the MISO_Pin to be used as SCK, the SCK_Pin to be used as SS.
+   * @param[in] cpol Optional: Clock polarity. The default is 0. In combination with clock phase, this bit dertermines the SPI transfer mode.
+   * | 0: SCK is low when idle. The leading edge of a clock cycle is a rising edge, while the trailing edge is a falling edge.
+   * | 1: SCK is high when idle. The leading edge of a clock cycle is a falling edge, while the trailing edge is a rising edge.
+   * @param[in] cpha Optional: Clock phase. The default is 0. In combination with clock polarity, this bit determines the SPI stransfer mode.
+   * | 0: The data is sampled on a leading SCK edge and changed on a trailing SCK edge.
+   * | 1: The data is sampled on a trailing SCK edge and changed on a leading SCK edge.
    * 
    * @return void
    * 
    */
-  void SercomRegistryInit(Sercom* sercom_x);
+  void SercomRegistryInit(Sercom* sercom_x, int dipo = 0x0, int dopo = 0x2, int cpol = 0, int cpha = 0);
 };
 
 #endif

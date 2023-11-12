@@ -32,7 +32,7 @@
   DIPO     | Data In Pinout
   DOPO     | Data Out Pinout
   DORD     | Data Order
-  DRE      | Data register empty
+  DRE      | Data Register Empty
   E        | Even
   EN       | Enable
   FORM     | Frame Format
@@ -632,7 +632,7 @@ void Sercom5SPISlave::SercomInit(MOSI_Pins MOSI_Pin, SCK_Pins SCK_Pin, SS_Pins S
 
 // Private Methods //
 
-void SercomSPISlave::SercomRegistryInit(Sercom* sercom_x) {
+void SercomSPISlave::SercomRegistryInit(Sercom* sercom_x, int dipo, int dopo, int cpol, int cpha) {
   int sercom_no = -1; // Initialize sercom number to be used in switch case. Initialize to -1 such that it has an invalid value if it is not explicitely defined.
   if (sercom_x == SERCOM0) {
     sercom_no = 0;
@@ -711,11 +711,11 @@ void SercomSPISlave::SercomRegistryInit(Sercom* sercom_x) {
 
   // Set up SPI control A register
   sercom_x->SPI.CTRLA.bit.DORD = 0; // MSB is transferred first. // page 492
-  sercom_x->SPI.CTRLA.bit.CPOL = 0; // SCK is low when idle. The leading edge of a clock cycle is a rising edge, while the trailing edge is a falling edge. // page 492
-  sercom_x->SPI.CTRLA.bit.CPHA = 0; // Data is sampled on a leading SCK edge and changed on a trailing SCK edge. // page 492
+  sercom_x->SPI.CTRLA.bit.CPOL = cpol; // Default 0: SCK is low when idle. The leading edge of a clock cycle is a rising edge, while the trailing edge is a falling edge. // page 492
+  sercom_x->SPI.CTRLA.bit.CPHA = cpha; // Default 0: Data is sampled on a leading SCK edge and changed on a trailing SCK edge. // page 492
   sercom_x->SPI.CTRLA.bit.FORM = 0x0; // SPI frame // page 493
-  sercom_x->SPI.CTRLA.bit.DIPO = 0x0; // DATA PAD0 is used as slave input: MOSI // (slave mode) page 493
-  sercom_x->SPI.CTRLA.bit.DOPO = 0x2; // DATA PAD2 is used as slave output: MISO // (slave mode) page 493
+  sercom_x->SPI.CTRLA.bit.DIPO = dipo; // Default 0x0: PAD[0] is used as data in. In slave operation, data in is MOSI. // (slave mode) page 493
+  sercom_x->SPI.CTRLA.bit.DOPO = dopo; // Default 0x2: PAD[3] is used as data out. In slave operation, data out is MISO. PAD[1] is used as SCK. PAD[2] is used as SS. // (slave mode) page 493
   sercom_x->SPI.CTRLA.bit.MODE = 0x2; // SPI slave operation. // page 494
   sercom_x->SPI.CTRLA.bit.IBON = 0x1; // Immediate Buffer Overflow Notification. STATUS.BUFOVF is asserted immediately upon buffer overflow. // page 494
   sercom_x->SPI.CTRLA.bit.RUNSTDBY = 1; // Wake on Receive Complete interrupt. // page 494
